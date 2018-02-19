@@ -32,29 +32,35 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.anyKey)
         {
-            Move();
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            {
+                Move();
+            }
+
+            if (_onGround && Input.GetAxis("Jump") == 1.0f)
+            {
+                Jump();
+            }
         }
     }
 
     private void Move()
     {
-
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 rightMovement = _right * MoveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
         Vector3 upMovement = _forward * MoveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
 
         Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            transform.forward = heading;
+        
+        transform.forward = heading;
         transform.position += rightMovement;
         transform.position += upMovement;
+    }
 
-        //jump code
-        if (_onGround && Input.GetAxis("Jump") == 1.0f)
-        {
-            _rb.velocity = new Vector3(0, Input.GetAxis("Jump") * JumpForce, 0);
-            _onGround = false;
-        }
+    private void Jump()
+    {
+        _rb.velocity = new Vector3(0, Input.GetAxis("Jump") * JumpForce, 0);
+        _onGround = false;
     }
 
     private void OnCollisionStay()
