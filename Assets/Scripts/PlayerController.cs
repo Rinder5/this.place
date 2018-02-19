@@ -44,6 +44,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Jump()
+    {
+        _rb.velocity = new Vector3(0, Input.GetAxis("Jump") * JumpForce, 0);
+        _onGround = false;
+    }
+
     private void Move()
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -55,12 +61,6 @@ public class PlayerController : MonoBehaviour
         transform.forward = heading;
         transform.position += rightMovement;
         transform.position += upMovement;
-    }
-
-    private void Jump()
-    {
-        _rb.velocity = new Vector3(0, Input.GetAxis("Jump") * JumpForce, 0);
-        _onGround = false;
     }
 
     private void OnCollisionStay()
