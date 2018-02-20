@@ -30,17 +30,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.anyKey)
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            {
-                Move();
-            }
+            Move();
+        }
 
-            if (_onGround && Input.GetAxis("Jump") == 1.0f)
-            {
-                Jump();
-            }
+        if (_onGround && Input.GetAxisRaw("Jump") == 1.0f)
+        {
+            Jump();
         }
     }
 
