@@ -9,16 +9,14 @@ public class CameraController : MonoBehaviour
     //used for translation
     private Vector3 _offset;
     private float _yValue;
-
     public float Speed = 0.25f;
 
     //used for rotation
     private float _originalY;
     private float _targetY;
-
     private bool _isRotating;
 
-    void Start()
+    private void Start()
     {
         _offset = transform.position - PlayerObject.transform.position;
         _offset.y = 0;
@@ -26,7 +24,7 @@ public class CameraController : MonoBehaviour
         _originalY = transform.position.y;
     }
 
-    void Update()
+    private void Update()
     {
         if ((Input.GetAxis("CameraControl") == 1 || Input.GetAxis("CameraControl") == -1) && !_isRotating)
         {
@@ -39,7 +37,7 @@ public class CameraController : MonoBehaviour
             RotateCamera();
         }
     }
-    
+
     private void RotateCamera()
     {
         float rotateAmount = _targetY - _originalY;
@@ -49,7 +47,7 @@ public class CameraController : MonoBehaviour
             remainingRotation -= 269.9f;
         if (remainingRotation <= -270)
             remainingRotation += 269.9f;*/
-        if (remainingRotation <= 0.03f)
+        if (remainingRotation <= 0.1f)
         {
             //transform.rotation = new Quaternion(transform.rotation.x, _targetY, transform.rotation.z, transform.rotation.w);
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, _targetY, transform.eulerAngles.z);
@@ -62,7 +60,7 @@ public class CameraController : MonoBehaviour
         _offset.y = 0;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 newPosition = PlayerObject.transform.position + _offset;
         newPosition.y = _yValue;
