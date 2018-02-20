@@ -27,31 +27,40 @@ public class CameraController : MonoBehaviour
     }
 
     void Update()
-    {/*
+    {
         if ((Input.GetAxis("CameraControl") == 1 || Input.GetAxis("CameraControl") == -1) && !_isRotating)
         {
-            _targetY = transform.rotation.y + Input.GetAxis("CameraControl") * 90;
+            _targetY = transform.eulerAngles.y + Input.GetAxis("CameraControl") * 90;
             _isRotating = true;
         }
 
         if (_isRotating)
         {
             RotateCamera();
-        }*/
+        }
     }
-    /*
+    
     private void RotateCamera()
     {
-        float rotateAmount = _targetY - _originalY; //transform.eulerAngles.y;
-        transform.Rotate(new Vector3(0, 1, 0), rotateAmount * Time.deltaTime * Speed);
-        float remainingRotation = Mathf.Abs(_targetY - transform.rotation.y);
-        if (remainingRotation <= 0.1f)
+        float rotateAmount = _targetY - _originalY;
+        transform.RotateAround(PlayerObject.transform.position, Vector3.up, rotateAmount * Time.deltaTime * Speed);
+        float remainingRotation = Mathf.Abs(_targetY - transform.eulerAngles.y);
+        /*if (remainingRotation >= 270)
+            remainingRotation -= 269.9f;
+        if (remainingRotation <= -270)
+            remainingRotation += 269.9f;*/
+        if (remainingRotation <= 0.03f)
         {
             //transform.rotation = new Quaternion(transform.rotation.x, _targetY, transform.rotation.z, transform.rotation.w);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, _targetY, transform.eulerAngles.z);
             _originalY = _targetY;
             _isRotating = false;
         }
-    }*/
+
+        PlayerObject.GetComponent<PlayerController>().UpdateCamera();
+        _offset = transform.position - PlayerObject.transform.position;
+        _offset.y = 0;
+    }
 
     void LateUpdate()
     {
