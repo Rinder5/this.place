@@ -9,10 +9,8 @@ public class CameraController : MonoBehaviour
 
     //used for translation
     private Vector3 _offset;
-    private float _yValue;
 
     //used for rotation
-    private float _originalY;
     private float _targetY;
     private bool _isKeyboardRotating;
     private bool _isMouseRotating;
@@ -30,16 +28,12 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         _offset = transform.position - PlayerObject.transform.position;
-        //_offset.y = 0;
-        _yValue = transform.position.y;
-        _originalY = transform.position.y;
         _playerController = PlayerObject.GetComponent<PlayerController>();
     }
 
     private void Update()
     {
         Vector3 newPosition = PlayerObject.transform.position + _offset;
-        //newPosition.y = _yValue;
         transform.position = newPosition;
 
         if (Input.GetAxis("CameraControl") != 0 && !_isMouseRotating)
@@ -78,7 +72,6 @@ public class CameraController : MonoBehaviour
 
         _playerController.UpdateCamera();
         _offset = transform.position - PlayerObject.transform.position;
-        //_offset.y = 0;
     }
 
     private void RotateMouseCamera()
@@ -104,7 +97,6 @@ public class CameraController : MonoBehaviour
 
         PlayerObject.GetComponent<PlayerController>().UpdateCamera();
         _offset = transform.position - PlayerObject.transform.position;
-        //_offset.y = 0;
     }
 
     private Vector3 GetNormalVector()
