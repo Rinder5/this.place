@@ -17,7 +17,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private bool _isMovingBlock = false;
 
     // Use this for initialization
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
         _playerController = GetComponentInParent<PlayerController>();
